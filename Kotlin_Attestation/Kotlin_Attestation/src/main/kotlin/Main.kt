@@ -228,6 +228,7 @@ interface Traffic
         return (drivingSpeed * 10 / 36) * drivingTime
     }
 
+    /*
     private fun startTraffic(array: List<Car>): Int
     {
         var carPassed = 0
@@ -244,6 +245,8 @@ interface Traffic
         return carPassed
     }
 
+     */
+
     fun traffic(carArray: List<Car>)
     {
         println("\n-----Добро пожаловать на светофор-----")
@@ -254,13 +257,33 @@ interface Traffic
         val statisticTime: Double = readln().toDouble()
         var statisticCycles: Int = statisticTime.toInt() * 60
         var allCarPassed = 0
+        var carPassed: Int
+        var allCarDriveWays = 0.0
+        var allCarSpeeds = 0.0
+        var carCounter = 0
 
         println("Запуск светофора на $statisticTime минут:")
 
         while (statisticCycles > 0)
         {
             println("\nЗеленый сигнал")
-            allCarPassed += startTraffic(carArray)
+            //allCarPassed += startTraffic(carArray)
+
+            carPassed = 0
+
+            for (i in (carArray.indices).random()..(carArray.indices).random())
+            {
+                carArray[i].speed = (0..25).random()
+                println("-->${carArray[i].transportType} движется со скоростью ${carArray[i].speed} м/с, " +
+                        "проехал ${driveWayCounter(40.0, carArray[i].speed)} метров")
+
+                carCounter += 1
+                allCarSpeeds += carArray[i].speed
+                allCarDriveWays += driveWayCounter(40.0, carArray[i].speed)
+                if (driveWayCounter(40.0, carArray[i].speed) >= 100) carPassed += 1
+            }
+
+            allCarPassed += carPassed
 
             try {
                 println("Красный сигнал")
@@ -273,10 +296,10 @@ interface Traffic
         }
 
         println("\n-->Статистика светофора:")
-        println("За $statisticTime минут по светофору проехало $allCarPassed машин")
-        println("За $statisticTime минут все машины проехали в сумме $ метров")
-        println("Средняя скорость машины на светофоре составляет $ м/с")
-        println("За $statisticTime минут машина проезжает в среднем $ метров")
+        println("За $statisticTime минут по светофору проехало $allCarPassed машин из $carCounter")
+        println("За $statisticTime минут все машины проехали в сумме $allCarDriveWays метров")
+        println("За $statisticTime минут машина проезжает в среднем ${allCarDriveWays / carCounter} метров")
+        println("Средняя скорость машины на светофоре составляет ${allCarSpeeds / carCounter} м/с")
     }
 }
 
