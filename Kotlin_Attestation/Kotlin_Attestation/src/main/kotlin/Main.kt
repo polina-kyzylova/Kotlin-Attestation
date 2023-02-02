@@ -228,25 +228,6 @@ interface Traffic
         return (drivingSpeed * 10 / 36) * drivingTime
     }
 
-    /*
-    private fun startTraffic(array: List<Car>): Int
-    {
-        var carPassed = 0
-
-        for (i in (array.indices).random()..(array.indices).random())
-        {
-            array[i].speed = (0..25).random()
-            println("-->${array[i].transportType} движется со скоростью ${array[i].speed} м/с, " +
-                    "проехал ${driveWayCounter(40.0, array[i].speed)} метров")
-
-            if (driveWayCounter(40.0, array[i].speed) >= 100) carPassed += 1
-        }
-
-        return carPassed
-    }
-
-     */
-
     fun traffic(carArray: List<Car>)
     {
         println("\n-----Добро пожаловать на светофор-----")
@@ -267,7 +248,6 @@ interface Traffic
         while (statisticCycles > 0)
         {
             println("\nЗеленый сигнал")
-            //allCarPassed += startTraffic(carArray)
 
             carPassed = 0
 
@@ -550,29 +530,36 @@ fun main()
     val vehicles = listOf(carAudi111, carAudi456, carChevrolet999, carChevrolet554, carToyota251,
         carPorsche789, carBMW123, cityBus9, cityBus15, touristicBus2329, truck3270, fireEngine7350, lorry1627)
 
-    println("\nСписок дорожно-транспортных ситуаций:")
-    println("1. Заправочная станция \n2. Дорожная закусочная \n3. Светофор")
     var checking = true
 
     while(checking)
     {
+        println("\nСписок дорожно-транспортных ситуаций:")
+        println("1. Заправочная станция \n2. Дорожная закусочная \n3. Светофор")
+
         print("\nВведите номер ситуации: ")
         when(readln().toInt())
         {
             1 ->
             {
                 carAudi111.goToThePetrolStation()
-                checking = false
+
+                println("\n-->Чтобы вернуться в меню введите 0, чтобы выйти введите любое значение")
+                checking = readln().toInt() == 0
             }
             2 ->
             {
                 motorcycle1.goToTheRoadEatery()
-                checking = false
+
+                println("\n-->Чтобы вернуться в меню введите 0, чтобы выйти введите любое значение")
+                checking = readln().toInt() == 0
             }
             3 ->
             {
                 carAudi111.traffic(vehicles)
-                checking = false
+
+                println("\n-->Чтобы вернуться в меню введите 0, чтобы выйти введите любое значение")
+                checking = readln().toInt() == 0
             }
             else ->
             {
